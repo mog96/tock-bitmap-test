@@ -7,9 +7,11 @@ fn main() {
 
     println!("{}", bitmap);
 
-    bitmap.set_bits(1, 3);
+    let mut no_overlap = bitmap.set_bits(1, 3);
 
     println!("{}", bitmap);
+
+    assert!(no_overlap);
 
     bitmap.set_bit(5);
 
@@ -18,4 +20,8 @@ fn main() {
     bitmap.clear_bit(2);
 
     println!("{}", bitmap);
+
+    no_overlap = bitmap.set_bits(1, 6);
+
+    assert!(!no_overlap);
 }
