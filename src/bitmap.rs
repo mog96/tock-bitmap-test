@@ -43,7 +43,10 @@ impl Bitmap {
         let start_byte_idx = start_idx / 8;
         let end_byte_idx = end_idx / 8;
         let first = 0xff << (start_idx % 8);
-        let second = 0xff >> (8 - (end_idx % 8));
+        let mut second = 0x00;
+        if end_idx % 8 > 0 {
+            second = 0xff >> (8 - (end_idx % 8));
+        }
         if start_byte_idx == end_byte_idx {
             let result = (self.map[start_byte_idx] & (first & second)) == 0;
             self.map[start_byte_idx] |= first & second;

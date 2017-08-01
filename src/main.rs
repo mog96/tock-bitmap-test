@@ -26,4 +26,9 @@ fn main() {
     println!("{}", bitmap);
 
     assert!(no_overlap);
+
+    no_overlap = bitmap.set_bits(0, 12);
+    println!("{}", bitmap);
+
+    assert!(!no_overlap);
 }
