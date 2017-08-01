@@ -1,3 +1,5 @@
+use std::fmt;
+
 const BITMAP_SIZE: usize = 20;
 
 pub struct Bitmap {
@@ -7,7 +9,7 @@ pub struct Bitmap {
 impl Bitmap {
     pub fn new() -> Bitmap {
         Bitmap {
-            map: [0; BITMAP_SIZE] // Array of 8-bit values.
+            map: [0; BITMAP_SIZE]
         }
     }
 
@@ -29,9 +31,10 @@ impl Bitmap {
         self.map[map_idx] |= 1 << (idx % 8);
     }
 
-    // Sets bits from start_idx to end_idx, inclusive.
+    // Sets bits from start_idx (inclusive) to end_idx (exclusive).
     // Returns false if any bits set overlap with already set bits,
     // true otherwise.
+
     // TODO: Check the return bool is set correctly
     pub fn set_bits(&mut self, start_idx: usize, end_idx: usize) -> bool {
         if start_idx > end_idx {
@@ -68,5 +71,22 @@ impl Bitmap {
         let mask = 0xff >> (8 - (total_length % 8));
         result = result && (self.map[total_length / 8] == mask);
         result
+    }
+}
+
+impl fmt::Display for Bitmap {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        for byte in self.map.iter() {
+            for j in 0..8 {
+                let expected = 0x1 << j;
+                let mut is_set = 0;
+                if byte & expected == expected {
+                    is_set = 1
+                }
+                write!(f, "{} ", is_set)?
+            }
+            write!(f, "  ")?
+        }
+        Ok(())
     }
 }
