@@ -1,0 +1,6 @@
+[package]
+name = "tock-bitmap-test"
+version = "0.1.0"
+authors = ["Mateo Garcia <mateog@stanford.edu>"]
+
+[dependencies]
